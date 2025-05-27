@@ -66,7 +66,7 @@ export function useLogin() {
     onSuccess: (data) => {
       queryClient.setQueryData(["user"], data.user);
       toast.success("Login successful");
-      router.push("/"); // Redirect to home page after successful login
+      router.push("/portal/user"); // Redirect to home page after successful login
     },
     onError: (error: Error) => {
       toast.error(error.message || "Login failed");

@@ -7,11 +7,14 @@ import {
   IoSettingsSharp,
   IoPersonCircleSharp,
   IoMedkitSharp,
-  IoRestaurantSharp,
   IoAnalyticsSharp,
-  IoClipboardSharp,
-  IoFastFoodSharp,
-  IoStatsChartSharp
+  IoBedSharp,
+  IoNotificationsSharp,
+  IoDocumentTextSharp,
+  IoHeartSharp,
+  IoPulseSharp,
+  IoHardwareChipSharp,
+  IoServerSharp
 } from 'react-icons/io5';
 
 export interface SystemApps {
@@ -35,95 +38,111 @@ export const appModules: Apps = {
       access: ['all'],
       displayName: 'Home',
       componentIcon: IoHomeSharp,
-      description: 'Dashboard overview of SmartRest'
+      description: 'Dashboard overview of SmartRest AIoT'
     },
     {
-      name: 'orders',
-      location: '/orders',
-      access: ['all'],
-      displayName: 'Orders',
-      componentIcon: IoClipboardSharp,
-      description: 'Manage customer orders and order history'
+      name: 'health',
+      location: '/health',
+      access: ['all', 'patient', 'doctor', 'admin'],
+      displayName: 'Health Monitoring',
+      componentIcon: IoHeartSharp,
+      description: 'Real-time health metrics and monitoring'
     },
     {
-      name: 'menu',
-      location: '/menu',
-      access: ['admin', 'finance', 'dataentry'],
-      displayName: 'Menu Management',
-      componentIcon: IoFastFoodSharp,
-      description: 'Configure menu items, categories, and pricing'
+      name: 'sleep',
+      location: '/sleep',
+      access: ['all', 'patient', 'doctor', 'customer', 'admin'],
+      displayName: 'Sleep Analysis',
+      componentIcon: IoBedSharp,
+      description: 'Sleep pattern analysis and insights'
     },
     {
-      name: 'tables',
-      location: '/tables',
-      access: ['admin', 'dataentry'],
-      displayName: 'Table Management',
-      componentIcon: IoRestaurantSharp,
-      description: 'Manage restaurant tables and seating'
+      name: 'patients',
+      location: '/patients',
+      access: ['doctor', 'admin'],
+      displayName: 'Patients',
+      componentIcon: IoPeopleSharp,
+      description: 'Manage patient profiles and health records'
     },
     {
-      name: 'reservations',
-      location: '/reservations',
-      access: ['admin', 'dataentry'],
-      displayName: 'Reservations',
-      componentIcon: IoCalendarSharp,
-      description: 'Manage customer reservations and bookings'
+      name: 'devices',
+      location: '/devices',
+      access: ['admin', 'customer'],
+      displayName: 'Smart Mattress',
+      componentIcon: IoHardwareChipSharp,
+      description: 'Smart mattress configuration and management'
+    },
+    {
+      name: 'temperature',
+      location: '/temperature',
+      access: ['all', 'patient', 'customer'],
+      displayName: 'Temperature Control',
+      componentIcon: IoPulseSharp,
+      description: 'Mattress temperature settings and automation'
     },
     {
       name: 'analytics',
       location: '/analytics',
-      access: ['admin', 'finance'],
+      access: ['admin', 'doctor'],
       displayName: 'Analytics',
-      componentIcon: IoStatsChartSharp,
-      description: 'Business intelligence and performance metrics'
-    },
-    {
-      name: 'payments',
-      location: '/payments',
-      access: ['admin', 'finance'],
-      displayName: 'Payments',
-      componentIcon: IoWalletSharp,
-      description: 'Process payments and manage transactions'
-    },
-    {
-      name: 'inventory',
-      location: '/inventory',
-      access: ['admin', 'finance'],
-      displayName: 'Inventory',
-      componentIcon: IoMedkitSharp,
-      description: 'Track ingredients and manage stock levels'
-    },
-    {
-      name: 'customers',
-      location: '/customers',
-      access: ['admin', 'dataentry'],
-      displayName: 'Customers',
-      componentIcon: IoPersonCircleSharp,
-      description: 'Manage customer data and loyalty programs'
+      componentIcon: IoAnalyticsSharp,
+      description: 'Health data analytics and insights'
     },
     {
       name: 'reports',
       location: '/reports',
-      access: ['admin', 'finance', 'reports', 'viewer'],
+      access: ['admin', 'doctor', 'patient'],
       displayName: 'Reports',
-      componentIcon: IoAnalyticsSharp,
-      description: 'Generate and view business reports'
+      componentIcon: IoDocumentTextSharp,
+      description: 'Health reports and sleep pattern analysis'
     },
     {
-      name: 'staff',
-      location: '/staff',
-      access: ['admin'],
-      displayName: 'Staff Management',
-      componentIcon: IoPeopleSharp,
-      description: 'Manage staff accounts and permissions'
+      name: 'notifications',
+      location: '/notifications',
+      access: ['all'],
+      displayName: 'Notifications',
+      componentIcon: IoNotificationsSharp,
+      description: 'System alerts and health notifications'
+    },
+    {
+      name: 'payments',
+      location: '/payments',
+      access: ['admin', 'customer'],
+      displayName: 'Payments',
+      componentIcon: IoWalletSharp,
+      description: 'Manage payments and subscriptions'
+    },
+    {
+      name: 'appointments',
+      location: '/appointments',
+      access: ['doctor', 'patient', 'admin'],
+      displayName: 'Appointments',
+      componentIcon: IoCalendarSharp,
+      description: 'Schedule and manage doctor appointments'
+    },
+    {
+      name: 'products',
+      location: '/products',
+      access: ['admin', 'customer'],
+      displayName: 'Products',
+      componentIcon: IoMedkitSharp,
+      description: 'Browse and manage smart mattress products'
     },
     {
       name: 'users',
       location: '/users',
       access: ['admin'],
       displayName: 'Users',
-      componentIcon: IoPeopleSharp,
+      componentIcon: IoPersonCircleSharp,
       description: 'Manage system user accounts and roles'
+    },
+    {
+      name: 'system',
+      location: '/system',
+      access: ['admin'],
+      displayName: 'System',
+      componentIcon: IoServerSharp,
+      description: 'IoT system status and management'
     },
     {
       name: 'settings',
