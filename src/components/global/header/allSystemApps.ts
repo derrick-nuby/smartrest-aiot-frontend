@@ -1,19 +1,18 @@
 import { IconType } from 'react-icons';
 import {
-  MdHome,
-  MdPostAdd,
-  MdShowChart,
-  MdRemoveRedEye,
-  MdFileDownload,
-  MdBarChart,
-  MdAttachMoney,
-  MdAccountBalance,
-  MdGroups,
-  MdScore,
-  MdPublic,
-  MdManageAccounts,
-  MdSettings
-} from 'react-icons/md';
+  IoHomeSharp,
+  IoPeopleSharp,
+  IoWalletSharp,
+  IoCalendarSharp,
+  IoSettingsSharp,
+  IoPersonCircleSharp,
+  IoMedkitSharp,
+  IoRestaurantSharp,
+  IoAnalyticsSharp,
+  IoClipboardSharp,
+  IoFastFoodSharp,
+  IoStatsChartSharp
+} from 'react-icons/io5';
 
 export interface SystemApps {
   name: string;
@@ -35,104 +34,104 @@ export const appModules: Apps = {
       location: '/',
       access: ['all'],
       displayName: 'Home',
-      componentIcon: MdHome,
-      description: 'Dashboard overview of PBF metrics'
+      componentIcon: IoHomeSharp,
+      description: 'Dashboard overview of SmartRest'
     },
     {
-      name: 'data-entry',
-      location: '/data-entry',
+      name: 'orders',
+      location: '/orders',
       access: ['all'],
-      displayName: 'Data Entry',
-      componentIcon: MdPostAdd,
-      description: 'Enter PBF quantities and validations'
+      displayName: 'Orders',
+      componentIcon: IoClipboardSharp,
+      description: 'Manage customer orders and order history'
     },
     {
-      name: 'quality-score-entry',
-      location: '/quality-entry',
-      access: ['all'],
-      displayName: 'Quality Scores',
-      componentIcon: MdShowChart,
-      description: 'Enter and compute facility quality scores'
+      name: 'menu',
+      location: '/menu',
+      access: ['admin', 'finance', 'dataentry'],
+      displayName: 'Menu Management',
+      componentIcon: IoFastFoodSharp,
+      description: 'Configure menu items, categories, and pricing'
     },
     {
-      name: 'preview-payments',
-      location: '/preview',
-      access: ['all'],
-      displayName: 'Preview Payments',
-      componentIcon: MdRemoveRedEye,
-      description: 'View computed payments and apply adjustments'
+      name: 'tables',
+      location: '/tables',
+      access: ['admin', 'dataentry'],
+      displayName: 'Table Management',
+      componentIcon: IoRestaurantSharp,
+      description: 'Manage restaurant tables and seating'
     },
     {
-      name: 'export-payments',
-      location: '/export',
-      access: ['all'],
-      displayName: 'Export Payments',
-      componentIcon: MdFileDownload,
-      description: 'Generate CSV/JSON/XML files for bank processing'
+      name: 'reservations',
+      location: '/reservations',
+      access: ['admin', 'dataentry'],
+      displayName: 'Reservations',
+      componentIcon: IoCalendarSharp,
+      description: 'Manage customer reservations and bookings'
+    },
+    {
+      name: 'analytics',
+      location: '/analytics',
+      access: ['admin', 'finance'],
+      displayName: 'Analytics',
+      componentIcon: IoStatsChartSharp,
+      description: 'Business intelligence and performance metrics'
+    },
+    {
+      name: 'payments',
+      location: '/payments',
+      access: ['admin', 'finance'],
+      displayName: 'Payments',
+      componentIcon: IoWalletSharp,
+      description: 'Process payments and manage transactions'
+    },
+    {
+      name: 'inventory',
+      location: '/inventory',
+      access: ['admin', 'finance'],
+      displayName: 'Inventory',
+      componentIcon: IoMedkitSharp,
+      description: 'Track ingredients and manage stock levels'
+    },
+    {
+      name: 'customers',
+      location: '/customers',
+      access: ['admin', 'dataentry'],
+      displayName: 'Customers',
+      componentIcon: IoPersonCircleSharp,
+      description: 'Manage customer data and loyalty programs'
     },
     {
       name: 'reports',
       location: '/reports',
-      access: ['all'],
+      access: ['admin', 'finance', 'reports', 'viewer'],
       displayName: 'Reports',
-      componentIcon: MdBarChart,
-      description: 'Interactive dashboards and visualizations'
+      componentIcon: IoAnalyticsSharp,
+      description: 'Generate and view business reports'
     },
     {
-      name: 'tariff-management',
-      location: '/tariffs',
+      name: 'staff',
+      location: '/staff',
       access: ['admin'],
-      displayName: 'Tariffs & Targets',
-      componentIcon: MdAttachMoney,
-      description: 'Configure PBF indicator tariffs and targets'
+      displayName: 'Staff Management',
+      componentIcon: IoPeopleSharp,
+      description: 'Manage staff accounts and permissions'
     },
     {
-      name: 'bank-management',
-      location: '/banks',
-      access: ['admin'],
-      displayName: 'Bank Details',
-      componentIcon: MdAccountBalance,
-      description: 'Configure facility bank account information'
-    },
-    {
-      name: 'partner-management',
-      location: '/partners',
-      access: ['admin'],
-      displayName: 'Partners',
-      componentIcon: MdGroups,
-      description: 'Assign funders to indicators and datasets'
-    },
-    {
-      name: 'quality-max-score',
-      location: '/quality-max-score',
-      access: ['admin'],
-      displayName: 'Quality Max Score',
-      componentIcon: MdScore,
-      description: 'Define maximum scores for quality indicators'
-    },
-    {
-      name: 'public-portal',
-      location: '/public',
-      access: ['public'],
-      displayName: 'Public Portal',
-      componentIcon: MdPublic,
-      description: 'Read-only PBF performance summaries'
-    },
-    {
-      name: 'user-management',
+      name: 'users',
       location: '/users',
       access: ['admin'],
       displayName: 'Users',
-      componentIcon: MdManageAccounts,
-      description: 'Manage system users, roles & permissions'
+      componentIcon: IoPeopleSharp,
+      description: 'Manage system user accounts and roles'
     },
     {
       name: 'settings',
       location: '/settings',
       access: ['admin'],
       displayName: 'Settings',
-      componentIcon: MdSettings,
-      description: 'System configuration and integrations'
+      componentIcon: IoSettingsSharp,
+      description: 'System configuration and preferences'
     }
   ]
 };

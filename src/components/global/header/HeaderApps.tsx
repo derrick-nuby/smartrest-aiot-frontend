@@ -9,6 +9,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { IoAppsSharp } from "react-icons/io5";
 import { appModules, type SystemApps } from "./allSystemApps";
+import { useCurrentUser } from "@/features/auth/hooks/UseAuthHooks";
 
 function escapeRegExpCharacters(text: string): string {
     return text.replace(/[/.*+?^${}()|[\]\\]/g, "\\$&");
@@ -16,7 +17,8 @@ function escapeRegExpCharacters(text: string): string {
 
 export default function HeaderApps() {
     const [filter, setFilter] = useState("");
-    const userRole = ["admin"];
+    const { data: currentUser } = useCurrentUser();
+    const userRole = currentUser?.role ? [currentUser.role] : ["admin"];
 
     const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFilter(event.target.value);

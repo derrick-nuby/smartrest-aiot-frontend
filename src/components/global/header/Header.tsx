@@ -17,7 +17,7 @@ export default function Header() {
         <Link href={"/"} className="flex items-center gap-2 md:gap-5">
           <Image src={"/images/app-icon.png"} alt={"logo"} className="size-8 md:size-9" width={40} height={40} />
           <p className="text-sm md:text-base font-medium truncate max-w-[180px] md:max-w-none">
-            Rwanda - Performance Based Financing
+            SmartRest AIOT
           </p>
         </Link>
 
