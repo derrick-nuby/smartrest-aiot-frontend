@@ -1,16 +1,29 @@
-import axios, { type AxiosInstance } from "axios";
+// file: src/lib/axiosConfig.ts
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import axios from "axios";
 
-// if (!API_BASE_URL) {
-//   throw new Error("NEXT_PUBLIC_API_BASE_URL is not defined");
-// }
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export const axiosInstance: AxiosInstance = axios.create({
+const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-export default axiosInstance;
+// Add a request interceptor to include the auth token in requests
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
+
+export default axiosInstance
+

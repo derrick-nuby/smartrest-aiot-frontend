@@ -1,38 +1,22 @@
-// file located at src/lib/errorHandler.ts
+// file location: src/lib/errorHandler.ts
 
 import { AxiosError } from "axios";
+import toast from "react-hot-toast";
 
-export const handleAxiosError = (error: unknown): string => {
+export const handleAxiosError = (error: unknown, defaultMessage = "An error occurred"): string => {
   if (error instanceof AxiosError) {
-    if (error.response) {
-      const errorData = error.response.data;
-
-      if (typeof errorData === 'string') {
-        return errorData;
-      }
-
-      if (errorData && typeof errorData === 'object') {
-        if ('error' in errorData && typeof errorData.error === 'string') {
-          return errorData.error;
-        }
-        if ('message' in errorData && typeof errorData.message === 'string') {
-          return errorData.message;
-        }
-      }
-
-      return `Server error: ${error.response.status}`;
-    }
-
-    if (error.request) {
-      return 'Unable to reach the server. Please check your internet connection.';
-    }
-
-    return error.message || 'An error occurred while processing your request.';
+    // Handle Axios errors
+    const errorMessage = error.response?.data?.error || error.message || defaultMessage;
+    toast.error(errorMessage);
+    return errorMessage;
+  } else if (error instanceof Error) {
+    // Handle generic errors
+    toast.error(error.message || defaultMessage);
+    return error.message || defaultMessage;
+  } else {
+    // Handle unknown errors
+    toast.error(defaultMessage);
+    return defaultMessage;
   }
+}
 
-  if (error instanceof Error) {
-    return error.message;
-  }
-
-  return 'An unexpected error occurred.';
-};
