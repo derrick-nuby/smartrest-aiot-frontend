@@ -32,7 +32,7 @@ export function useRegister() {
     onSuccess: (data) => {
       queryClient.setQueryData(["user"], data.user);
       toast.success("Registration successful");
-      router.push("/"); // Redirect to home page after successful registration
+      router.push("/auth/login"); // Redirect to home page after successful registration
     },
     onError: (error: Error) => {
       toast.error(error.message || "Registration failed");
