@@ -32,7 +32,7 @@ export function useRegister() {
     onSuccess: (data) => {
       queryClient.setQueryData(["user"], data.user);
       toast.success("Registration successful");
-      router.push("/"); // Redirect to home page after successful registration
+      router.push("/auth/login"); // Redirect to home page after successful registration
     },
     onError: (error: Error) => {
       toast.error(error.message || "Registration failed");
@@ -66,7 +66,7 @@ export function useLogin() {
     onSuccess: (data) => {
       queryClient.setQueryData(["user"], data.user);
       toast.success("Login successful");
-      router.push("/"); // Redirect to home page after successful login
+      router.push("/portal/user"); // Redirect to home page after successful login
     },
     onError: (error: Error) => {
       toast.error(error.message || "Login failed");
