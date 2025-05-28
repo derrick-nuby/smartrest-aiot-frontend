@@ -46,6 +46,12 @@ export const loginUser = async (data: LoginFormData) => {
     if (response.data.token) {
       localStorage.setItem("token", response.data.token);
     }
+
+    // Store user data and role in separate keys
+    if (response.data.user) {
+      localStorage.setItem("userData", JSON.stringify(response.data.user));
+      localStorage.setItem("userRole", response.data.user.role || "");
+    }
     return response.data;
   } catch (error) {
     throw new Error(handleAxiosError(error, "Login failed"));
