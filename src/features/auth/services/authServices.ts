@@ -46,6 +46,21 @@ export const loginUser = async (data: LoginFormData) => {
     if (response.data.token) {
       localStorage.setItem("token", response.data.token);
     }
+
+    // Store user data and role in separate keys
+    if (response.data.user) {
+      localStorage.setItem("userData", JSON.stringify(response.data.user));
+      localStorage.setItem("userRole", response.data.user.role || "");
+    }
+    if (response.data.token) {
+      document.cookie = `token=${response.data.token}; path=/; max-age=${7 * 24 * 60 * 60}; Secure; SameSite=Strict`;
+    }
+
+    // Store user data and role in cookies
+    if (response.data.user) {
+      document.cookie = `userData=${encodeURIComponent(JSON.stringify(response.data.user))}; path=/; max-age=${7 * 24 * 60 * 60}; Secure; SameSite=Strict`;
+      document.cookie = `userRole=${response.data.user.role || ""}; path=/; max-age=${7 * 24 * 60 * 60}; Secure; SameSite=Strict`;
+    }
     return response.data;
   } catch (error) {
     throw new Error(handleAxiosError(error, "Login failed"));

@@ -11,6 +11,29 @@ const axiosInstance = axios.create({
   },
 });
 
+// Helper function to get user data
+export const getUserData = () => {
+  try {
+    const userData = localStorage.getItem("userData");
+    return userData ? JSON.parse(userData) : null;
+  } catch (error) {
+    console.error("Error parsing user data:", error);
+    return null;
+  }
+};
+
+// Helper function to get user role
+export const getUserRole = () => {
+  return localStorage.getItem("userRole") || "";
+};
+
+// Function to clear auth data on logout
+export const clearAuthData = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("userData");
+  localStorage.removeItem("userRole");
+};
+
 // Add a request interceptor to include the auth token in requests
 axiosInstance.interceptors.request.use(
   (config) => {

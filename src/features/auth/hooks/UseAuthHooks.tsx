@@ -66,7 +66,23 @@ export function useLogin() {
     onSuccess: (data) => {
       queryClient.setQueryData(["user"], data.user);
       toast.success("Login successful");
-      router.push("/portal/user"); // Redirect to home page after successful login
+
+      // Get the user role from localStorage
+      const userRole = localStorage.getItem("userRole");
+
+      // Redirect based on user role
+      if (userRole === "patient") {
+        router.push("/portal/patient");
+      } else if (userRole === "admin") {
+        router.push("/portal/admin");
+      } else if (userRole === "customer") {
+        router.push("/portal/customer");
+      } else if (userRole === "customer") {
+        router.push("/portal/doctor");
+      } else {
+        // Default redirect if role is not recognized
+        router.push("/portal/user");
+      }
     },
     onError: (error: Error) => {
       toast.error(error.message || "Login failed");
