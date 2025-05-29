@@ -1,9 +1,9 @@
 "use client";
 
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { VitalSignsChart } from "@/features/dashboards/doctor/components/vital-signs-chart";
 import { PatientComparisonChart } from "@/features/dashboards/doctor/components/patient-comparison-chart";
 import { AlertTimelineChart } from "@/features/dashboards/doctor/components/alert-timeline-chart";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   healthImprovementData,
   disorderDistributionData,
