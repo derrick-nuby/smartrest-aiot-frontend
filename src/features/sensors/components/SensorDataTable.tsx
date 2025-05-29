@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useHistoricalSensorData } from "../hooks/useSensorHooks"
-import { SensorType } from "../types/SensorTypes"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { DateRangePicker } from "@/components/ui/date-range-picker"
-import { Button } from "@/components/ui/button"
-import { Loader2, Download } from "lucide-react"
+import { useState } from "react";
+import { useHistoricalSensorData } from "../hooks/useSensorHooks";
+import { SensorType } from "../types/SensorTypes";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { DateRangePicker } from "@/components/ui/date-range-picker";
+import { Button } from "@/components/ui/button";
+import { Loader2, Download } from "lucide-react";
 import {
   Pagination,
   PaginationContent,
@@ -16,20 +16,20 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination"
+} from "@/components/ui/pagination";
 
 interface SensorDataTableProps {
-  patientId: string
+  patientId: string;
 }
 
 export const SensorDataTable = ({ patientId }: SensorDataTableProps) => {
-  const [sensorType, setSensorType] = useState<SensorType | "all">("all")
+  const [sensorType, setSensorType] = useState<SensorType | "all">("all");
   const [dateRange, setDateRange] = useState({
     from: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // 7 days ago
     to: new Date(),
-  })
-  const [limit, setLimit] = useState(50)
-  const [page, setPage] = useState(1)
+  });
+  const limit = 50;
+  const [page, setPage] = useState(1);
 
   const { data, isLoading, isError } = useHistoricalSensorData({
     patient_id: patientId,
@@ -37,20 +37,20 @@ export const SensorDataTable = ({ patientId }: SensorDataTableProps) => {
     from: dateRange.from.toISOString().split("T")[0],
     to: dateRange.to.toISOString().split("T")[0],
     limit: limit,
-  })
+  });
 
   const formatSensorName = (type: string): string => {
     return type
       .split("_")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ")
-  }
+      .join(" ");
+  };
 
   const handleExportCSV = () => {
-    if (!data?.readings.length) return
+    if (!data?.readings.length) return;
 
     // Create CSV content
-    const headers = ["Reading ID", "Sensor Type", "Value", "Unit", "Timestamp", "Notes"]
+    const headers = ["Reading ID", "Sensor Type", "Value", "Unit", "Timestamp", "Notes"];
     const csvContent = [
       headers.join(","),
       ...data.readings.map((reading) =>
@@ -63,22 +63,22 @@ export const SensorDataTable = ({ patientId }: SensorDataTableProps) => {
           reading.notes || "",
         ].join(","),
       ),
-    ].join("\n")
+    ].join("\n");
 
     // Create download link
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" })
-    const url = URL.createObjectURL(blob)
-    const link = document.createElement("a")
-    link.setAttribute("href", url)
-    link.setAttribute("download", `sensor-data-${patientId}-${new Date().toISOString().split("T")[0]}.csv`)
-    link.style.visibility = "hidden"
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  }
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", `sensor-data-${patientId}-${new Date().toISOString().split("T")[0]}.csv`);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
-  const paginatedData = data?.readings.slice((page - 1) * 10, page * 10)
-  const totalPages = data?.readings ? Math.ceil(data.readings.length / 10) : 0
+  const paginatedData = data?.readings.slice((page - 1) * 10, page * 10);
+  const totalPages = data?.readings ? Math.ceil(data.readings.length / 10) : 0;
 
   return (
     <Card className="w-full">
@@ -155,21 +155,21 @@ export const SensorDataTable = ({ patientId }: SensorDataTableProps) => {
                 <PaginationContent>
                   <PaginationItem>
                     <PaginationPrevious
-                      onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-                      disabled={page === 1}
+                      onClick={page === 1 ? undefined : () => setPage((prev) => Math.max(prev - 1, 1))}
+                      className={page === 1 ? "pointer-events-none opacity-50" : ""}
                     />
                   </PaginationItem>
 
                   {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                    let pageNum
+                    let pageNum;
                     if (totalPages <= 5) {
-                      pageNum = i + 1
+                      pageNum = i + 1;
                     } else if (page <= 3) {
-                      pageNum = i + 1
+                      pageNum = i + 1;
                     } else if (page >= totalPages - 2) {
-                      pageNum = totalPages - 4 + i
+                      pageNum = totalPages - 4 + i;
                     } else {
-                      pageNum = page - 2 + i
+                      pageNum = page - 2 + i;
                     }
 
                     return (
@@ -178,13 +178,13 @@ export const SensorDataTable = ({ patientId }: SensorDataTableProps) => {
                           {pageNum}
                         </PaginationLink>
                       </PaginationItem>
-                    )
+                    );
                   })}
 
                   <PaginationItem>
                     <PaginationNext
-                      onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-                      disabled={page === totalPages}
+                      onClick={page === totalPages ? undefined : () => setPage((prev) => Math.min(prev + 1, totalPages))}
+                      className={page === totalPages ? "pointer-events-none opacity-50" : ""}
                     />
                   </PaginationItem>
                 </PaginationContent>
@@ -194,5 +194,5 @@ export const SensorDataTable = ({ patientId }: SensorDataTableProps) => {
         )}
       </CardContent>
     </Card>
-  )
-}
+  );
+};

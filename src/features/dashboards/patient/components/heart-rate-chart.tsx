@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { Bar, BarChart, XAxis, YAxis, CartesianGrid } from "recharts"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { heartRateDistributionData } from "../data/mock-data"
+import { Bar, BarChart, XAxis, YAxis, CartesianGrid } from "recharts";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { heartRateDistributionData } from "../data/mock-data";
 
 const chartConfig = {
   minutes: {
     label: "Minutes",
     color: "hsl(var(--chart-4))",
   },
-}
+};
 
 export function HeartRateChart() {
   return (
@@ -28,12 +28,11 @@ export function HeartRateChart() {
             <ChartTooltip content={<ChartTooltipContent />} />
             <Bar
               dataKey="minutes"
-              fill={(entry) => (entry.isHealthy ? "hsl(var(--chart-4))" : "hsl(var(--destructive))")}
               radius={[4, 4, 0, 0]}
             />
           </BarChart>
         </ChartContainer>
       </CardContent>
     </Card>
-  )
+  );
 }

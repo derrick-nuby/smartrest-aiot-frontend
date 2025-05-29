@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { Loader2 } from "lucide-react";
-import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendItem } from "@/components/ui/chart";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
 interface SensorReadingsChartProps {
@@ -94,7 +94,12 @@ export const SensorReadingsChart = ({ patientId }: SensorReadingsChartProps) => 
               </div>
             ) : (
               <div className="h-[350px] w-full">
-                <ChartContainer>
+                <ChartContainer config={{
+                  sensorData: {
+                    label: getSensorTypeLabel(sensorType),
+                    color: "#8884d8"
+                  }
+                }}>
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={chartData}>
                       <XAxis dataKey="timestamp" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
@@ -132,10 +137,18 @@ export const SensorReadingsChart = ({ patientId }: SensorReadingsChartProps) => 
                       />
                     </LineChart>
                   </ResponsiveContainer>
-                  <ChartLegend>
-                    <ChartLegendItem color="#8884d8" label={getSensorTypeLabel(sensorType)} />
-                  </ChartLegend>
                 </ChartContainer>
+                <div className="flex items-center justify-center mt-2">
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="h-3 w-3 rounded-sm"
+                      style={{ backgroundColor: "#8884d8" }}
+                    />
+                    <span className="text-sm text-muted-foreground">
+                      {getSensorTypeLabel(sensorType)}
+                    </span>
+                  </div>
+                </div>
               </div>
             )}
           </TabsContent>

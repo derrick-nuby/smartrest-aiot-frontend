@@ -1,27 +1,27 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Switch } from "@/components/ui/switch"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { createProductSchema, type CreateProductFormData, updateProductSchema } from "../schemas/productSchemas"
-import type { Product } from "../types/ProductTypes"
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { createProductSchema, type CreateProductFormData, updateProductSchema } from "../schemas/productSchemas";
+import type { Product } from "../types/ProductTypes";
 
 interface ProductFormProps {
-  product?: Product
-  onSubmit: (data: CreateProductFormData) => void
-  isSubmitting?: boolean
+  product?: Product;
+  onSubmit: (data: CreateProductFormData) => void;
+  isSubmitting?: boolean;
 }
 
 export const ProductForm = ({ product, onSubmit, isSubmitting = false }: ProductFormProps) => {
   // Determine if we're editing or creating
-  const isEditing = !!product
+  const isEditing = !!product;
 
   // Use the appropriate schema based on whether we're editing or creating
-  const schema = isEditing ? updateProductSchema : createProductSchema
+  const schema = isEditing ? updateProductSchema : createProductSchema;
 
   const form = useForm<CreateProductFormData>({
     resolver: zodResolver(schema),
@@ -32,7 +32,7 @@ export const ProductForm = ({ product, onSubmit, isSubmitting = false }: Product
       firmware_version: product?.firmware_version || "",
       is_active: product?.is_active ?? true,
     },
-  })
+  });
 
   return (
     <Form {...form}>
@@ -115,5 +115,5 @@ export const ProductForm = ({ product, onSubmit, isSubmitting = false }: Product
         </Button>
       </form>
     </Form>
-  )
-}
+  );
+};

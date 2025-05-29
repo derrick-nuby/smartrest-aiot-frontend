@@ -50,6 +50,7 @@ export interface Notification {
   title?: string;
   body: string;
   type: MessageType | string;
+  is_read: boolean;
   sent_at: string;
 }
 

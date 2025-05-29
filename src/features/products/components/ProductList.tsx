@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useProducts, useDeleteProduct } from "../hooks/useProductHooks"
-import { ProductCard } from "./ProductCard"
+import { useState } from "react";
+import { useProducts, useDeleteProduct } from "../hooks/useProductHooks";
+import { ProductCard } from "./ProductCard";
 import {
   Pagination,
   PaginationContent,
@@ -10,7 +10,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination"
+} from "@/components/ui/pagination";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,42 +20,42 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
-import type { Product } from "../types/ProductTypes"
-import { Loader2 } from "lucide-react"
+} from "@/components/ui/alert-dialog";
+import type { Product } from "../types/ProductTypes";
+import { Loader2 } from "lucide-react";
 
 interface ProductListProps {
-  onEdit?: (product: Product) => void
+  onEdit?: (product: Product) => void;
 }
 
 export const ProductList = ({ onEdit }: ProductListProps) => {
-  const [currentPage, setCurrentPage] = useState(1)
-  const [productToDelete, setProductToDelete] = useState<string | null>(null)
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productToDelete, setProductToDelete] = useState<string | null>(null);
 
-  const { data, isLoading, isError } = useProducts(currentPage)
-  const deleteProductMutation = useDeleteProduct()
+  const { data, isLoading, isError } = useProducts(currentPage);
+  const deleteProductMutation = useDeleteProduct();
 
   const handleDelete = (productId: string) => {
-    setProductToDelete(productId)
-  }
+    setProductToDelete(productId);
+  };
 
   const confirmDelete = () => {
     if (productToDelete) {
-      deleteProductMutation.mutate(productToDelete)
-      setProductToDelete(null)
+      deleteProductMutation.mutate(productToDelete);
+      setProductToDelete(null);
     }
-  }
+  };
 
   const cancelDelete = () => {
-    setProductToDelete(null)
-  }
+    setProductToDelete(null);
+  };
 
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
-    )
+    );
   }
 
   if (isError) {
@@ -63,7 +63,7 @@ export const ProductList = ({ onEdit }: ProductListProps) => {
       <div className="text-center p-8">
         <p className="text-destructive">Failed to load products. Please try again later.</p>
       </div>
-    )
+    );
   }
 
   return (
@@ -79,22 +79,22 @@ export const ProductList = ({ onEdit }: ProductListProps) => {
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                disabled={currentPage === 1}
+                onClick={currentPage === 1 ? undefined : () => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
               />
             </PaginationItem>
 
             {Array.from({ length: Math.min(5, data.last_page) }, (_, i) => {
               // Logic to show pages around current page
-              let pageNum
+              let pageNum;
               if (data.last_page <= 5) {
-                pageNum = i + 1
+                pageNum = i + 1;
               } else if (currentPage <= 3) {
-                pageNum = i + 1
+                pageNum = i + 1;
               } else if (currentPage >= data.last_page - 2) {
-                pageNum = data.last_page - 4 + i
+                pageNum = data.last_page - 4 + i;
               } else {
-                pageNum = currentPage - 2 + i
+                pageNum = currentPage - 2 + i;
               }
 
               return (
@@ -103,13 +103,13 @@ export const ProductList = ({ onEdit }: ProductListProps) => {
                     {pageNum}
                   </PaginationLink>
                 </PaginationItem>
-              )
+              );
             })}
 
             <PaginationItem>
               <PaginationNext
-                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, data.last_page))}
-                disabled={currentPage === data.last_page}
+                onClick={currentPage === data.last_page ? undefined : () => setCurrentPage((prev) => Math.min(prev + 1, data.last_page))}
+                className={currentPage === data.last_page ? "pointer-events-none opacity-50" : ""}
               />
             </PaginationItem>
           </PaginationContent>
@@ -143,5 +143,5 @@ export const ProductList = ({ onEdit }: ProductListProps) => {
         </AlertDialogContent>
       </AlertDialog>
     </div>
-  )
-}
+  );
+};

@@ -1,23 +1,23 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Scatter, ScatterChart, XAxis, YAxis, CartesianGrid } from "recharts"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { generateAlertTimelineData } from "../data/mock-data"
-import type { DoctorFilterPeriod } from "../types"
+import { useState } from "react";
+import { Scatter, ScatterChart, XAxis, YAxis, CartesianGrid } from "recharts";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { generateAlertTimelineData } from "../data/mock-data";
+import type { DoctorFilterPeriod } from "../types";
 
 const chartConfig = {
   severity: {
     label: "Alert Severity",
     color: "hsl(var(--chart-4))",
   },
-}
+};
 
 export function AlertTimelineChart() {
-  const [period, setPeriod] = useState<DoctorFilterPeriod>("7d")
-  const data = generateAlertTimelineData(period)
+  const [period, setPeriod] = useState<DoctorFilterPeriod>("7d");
+  const data = generateAlertTimelineData(period);
 
   return (
     <Card>
@@ -59,11 +59,10 @@ export function AlertTimelineChart() {
             />
             <Scatter
               dataKey="severity"
-              fill={(entry) => (entry.resolved ? "hsl(var(--chart-4))" : "hsl(var(--destructive))")}
             />
           </ScatterChart>
         </ChartContainer>
       </CardContent>
     </Card>
-  )
+  );
 }

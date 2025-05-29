@@ -1,72 +1,76 @@
-import { z } from "zod"
+import { z } from "zod";
 
 export interface SleepReport {
-  patient_id: string
-  date: string
+  patient_id: string;
+  date: string;
   sleep_duration: {
-    total_hours: number
-    minutes: number
-  }
+    total_hours: number;
+    minutes: number;
+  };
   sleep_stages: {
-    awake: number
-    light: number
-    deep: number
-    rem: number
-  }
-  sleep_score: number
-  posture_changes: number
-  breathing_events: number
-  avg_heart_rate: number
-  notes?: string
+    awake: number;
+    light: number;
+    deep: number;
+    rem: number;
+  };
+  sleep_score: number;
+  sleep_efficiency: number;
+  awakenings: number;
+  restlessness_score: number;
+  avg_temperature: number;
+  posture_changes: number;
+  breathing_events: number;
+  avg_heart_rate: number;
+  notes?: string;
 }
 
 export interface HealthSummary {
-  patient_id: string
+  patient_id: string;
   period: {
-    start_date: string
-    end_date: string
-  }
+    start_date: string;
+    end_date: string;
+  };
   vital_trends: {
     heart_rate: {
-      avg: number
-      min: number
-      max: number
-      trend: "improving" | "declining" | "stable"
-    }
+      avg: number;
+      min: number;
+      max: number;
+      trend: "improving" | "declining" | "stable";
+    };
     breathing_rate: {
-      avg: number
-      min: number
-      max: number
-      trend: "improving" | "declining" | "stable"
-    }
+      avg: number;
+      min: number;
+      max: number;
+      trend: "improving" | "declining" | "stable";
+    };
     [key: string]: {
-      avg: number
-      min: number
-      max: number
-      trend: "improving" | "declining" | "stable"
-    }
-  }
+      avg: number;
+      min: number;
+      max: number;
+      trend: "improving" | "declining" | "stable";
+    };
+  };
   sleep_quality: {
-    avg_score: number
-    trend: "improving" | "declining" | "stable"
-  }
+    avg_score: number;
+    trend: "improving" | "declining" | "stable";
+  };
   anomalies: {
-    type: string
-    description: string
-    detected_at: string
-    severity: "low" | "medium" | "high"
-  }[]
-  recommendations: string[]
+    type: string;
+    description: string;
+    detected_at: string;
+    severity: "low" | "medium" | "high";
+  }[];
+  recommendations: string[];
 }
 
 export interface SleepReportQueryParams {
-  date: string
-  patient_id?: string
+  date: string;
+  patient_id?: string;
 }
 
 export interface HealthSummaryQueryParams {
-  patient_id?: string
-  days: number
+  patient_id?: string;
+  days: number;
 }
 
 // Zod schema for sleep report
@@ -84,13 +88,17 @@ export const sleepReportSchema = z.object({
     rem: z.number(),
   }),
   sleep_score: z.number(),
+  sleep_efficiency: z.number(),
+  awakenings: z.number(),
+  restlessness_score: z.number(),
+  avg_temperature: z.number(),
   posture_changes: z.number(),
   breathing_events: z.number(),
   avg_heart_rate: z.number(),
   notes: z.string().optional(),
-})
+});
 
-export type SleepReportSchema = z.infer<typeof sleepReportSchema>
+export type SleepReportSchema = z.infer<typeof sleepReportSchema>;
 
 // Zod schema for health summary
 export const healthSummarySchema = z.object({
@@ -120,6 +128,6 @@ export const healthSummarySchema = z.object({
     }),
   ),
   recommendations: z.array(z.string()),
-})
+});
 
-export type HealthSummarySchema = z.infer<typeof healthSummarySchema>
+export type HealthSummarySchema = z.infer<typeof healthSummarySchema>;

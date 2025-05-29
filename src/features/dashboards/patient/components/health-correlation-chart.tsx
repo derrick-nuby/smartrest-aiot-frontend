@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { Scatter, ScatterChart, XAxis, YAxis, CartesianGrid } from "recharts"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { healthCorrelationData } from "../data/mock-data"
+import { Scatter, ScatterChart, XAxis, YAxis, CartesianGrid } from "recharts";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { healthCorrelationData } from "../data/mock-data";
 
 const chartConfig = {
   healthMetric: {
     label: "Resting Heart Rate",
     color: "hsl(var(--chart-5))",
   },
-}
+};
 
 export function HealthCorrelationChart() {
   return (
@@ -35,7 +35,7 @@ export function HealthCorrelationChart() {
             />
             <ChartTooltip
               content={<ChartTooltipContent />}
-              formatter={(value, name, props) => [
+              formatter={(value, name) => [
                 `${value}${name === "healthMetric" ? " BPM" : ""}`,
                 name === "healthMetric" ? "Heart Rate" : "Sleep Quality",
               ]}
@@ -45,5 +45,5 @@ export function HealthCorrelationChart() {
         </ChartContainer>
       </CardContent>
     </Card>
-  )
+  );
 }
