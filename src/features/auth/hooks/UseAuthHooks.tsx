@@ -76,7 +76,7 @@ export function useLogin() {
       } else if (userRole === "admin") {
         router.push("/portal/admin");
       } else if (userRole === "customer") {
-        router.push("/portal/admin");
+        router.push("/portal/customer");
       } else if (userRole === "customer") {
         router.push("/portal/doctor");
       } else {
