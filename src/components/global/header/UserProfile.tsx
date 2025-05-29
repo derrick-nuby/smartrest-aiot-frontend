@@ -24,8 +24,18 @@ export default function UserProfile() {
     const initials = `${user.firstName?.charAt(0).toUpperCase() || "U"}${user.lastName?.charAt(0).toUpperCase() || ""}`;
 
     const handleLogout = () => {
-        console.log("Logout clicked");
-        // logout logic here
+        // Clear localStorage
+        localStorage.removeItem("token");
+        localStorage.removeItem("userData");
+        localStorage.removeItem("userRole");
+
+        // Clear cookies
+        document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure; SameSite=Strict";
+        document.cookie = "userData=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure; SameSite=Strict";
+        document.cookie = "userRole=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure; SameSite=Strict";
+
+        // Redirect to login page
+        window.location.href = "/auth/login";
     };
 
     return (

@@ -56,11 +56,13 @@ export interface LatestSensorReadings {
 
 export interface HistoricalSensorData {
   patient_id: string;
-  readings: SensorReading[];
+  data: SensorReading[]; // Paginated API response structure
   period: {
     start: string;
     end: string;
   };
+  // Legacy support for non-paginated response
+  readings?: SensorReading[];
 }
 
 export interface SensorDataQueryParams {

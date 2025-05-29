@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Edit, Trash2 } from "lucide-react"
-import Image from "next/image"
-import type { Product } from "../types/ProductTypes"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Edit, Trash2 } from "lucide-react";
+import Image from "next/image";
+import type { Product } from "../types/ProductTypes";
 
 interface ProductCardProps {
-  product: Product
-  onEdit?: (product: Product) => void
-  onDelete?: (productId: string) => void
+  product: Product;
+  onEdit?: (product: Product) => void;
+  onDelete?: (productId: string) => void;
 }
 
 export const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => {
@@ -18,7 +18,7 @@ export const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => 
     <Card className="overflow-hidden">
       <div className="relative h-48 w-full">
         <Image
-          src={product.image_url || "/placeholder.svg?height=192&width=384"}
+          src={"/placeholder.svg"}
           alt={product.name}
           fill
           className="object-cover"
@@ -54,5 +54,5 @@ export const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => 
         </div>
       </CardFooter>
     </Card>
-  )
-}
+  );
+};

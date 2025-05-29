@@ -18,15 +18,27 @@ function escapeRegExpCharacters(text: string): string {
 export default function HeaderApps() {
     const [filter, setFilter] = useState("");
     const { data: currentUser } = useCurrentUser();
-    const userRole = currentUser?.role ? [currentUser.role] : ["admin"];
+
+    // Get user role from currentUser or fallback to localStorage
+    const getUserRole = (): string => {
+        if (currentUser?.role) {
+            return currentUser.role;
+        }
+        // Fallback to localStorage
+        if (typeof window !== "undefined") {
+            return localStorage.getItem("userRole") || "admin";
+        }
+        return "admin";
+    };
+
+    const userRole = getUserRole();
+    const userRoleArray = [userRole];
 
     const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFilter(event.target.value);
-    };
-
-    const filteredModules =
+    }; const filteredModules =
         appModules?.modules?.filter((module: SystemApps) => {
-            const hasAccess = userRole.some((role) => module.access.includes(role)) || module.access.includes("all");
+            const hasAccess = userRoleArray.some((role) => module.access.includes(role)) || module.access.includes("all");
 
             const appName = module.displayName || module.name;
             const formattedAppName = appName.toLowerCase();
@@ -66,19 +78,18 @@ export default function HeaderApps() {
                                 filteredModules.map((module: SystemApps) => {
                                     const IconComponent = module.componentIcon;
 
-                                    return (
-                                        <Link
-                                            href={`/portal${module.location}`}
-                                            key={module.name}
-                                            className="group flex flex-col text-center gap-2 items-center text-xs border border-transparent rounded-[3px] w-[calc(33.33%-16px)] sm:w-24 hover:bg-primary py-3 m-2"
-                                        >
-                                            {IconComponent && (
-                                                <IconComponent size={38} className="text-primary group-hover:text-background" />
-                                            )}
-                                            <p className="mt-3 text-base-1000 group-hover:text-background line-clamp-2">
-                                                {module.displayName}
-                                            </p>
-                                        </Link>
+                                    return (<Link
+                                        href={`/portal/${userRole}/${module.name}`}
+                                        key={module.name}
+                                        className="group flex flex-col text-center gap-2 items-center text-xs border border-transparent rounded-[3px] w-[calc(33.33%-16px)] sm:w-24 hover:bg-primary py-3 m-2"
+                                    >
+                                        {IconComponent && (
+                                            <IconComponent size={38} className="text-primary group-hover:text-background" />
+                                        )}
+                                        <p className="mt-3 text-base-1000 group-hover:text-background line-clamp-2">
+                                            {module.displayName}
+                                        </p>
+                                    </Link>
                                     );
                                 })
                             ) : (
