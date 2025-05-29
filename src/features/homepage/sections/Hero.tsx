@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export function Hero() {
   return (
@@ -24,17 +25,22 @@ export function Hero() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Button size="lg" className="text-lg px-8 py-6">
-            Start Your Journey
-            <ArrowRight className="ml-2 h-5 w-5" />
+          <Button size="lg" className="text-lg px-8 py-6" asChild>
+            <Link href={"/auth/login"}>
+              Start Your Journey
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
           </Button>
           <Button
             variant="outline"
             size="lg"
             className="text-lg px-8 py-6 bg-white/10 border-white/20 text-white hover:bg-white/20"
+            asChild
           >
-            <Play className="mr-2 h-5 w-5" />
-            Watch Demo
+            <Link href={"https://youtube.com"}>
+              <Play className="mr-2 h-5 w-5" />
+              Watch Demo
+            </Link>
           </Button>
         </div>
       </div>

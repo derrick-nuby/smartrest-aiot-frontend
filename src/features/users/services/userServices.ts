@@ -40,7 +40,7 @@ export const createUser = async (data: CreateUserRequest) => {
 
 export const updateUser = async (userId: string, data: UpdateUserRequest) => {
   try {
-    const response = await axiosInstance.patch(`/users/${userId}`, data);
+    const response = await axiosInstance.put(`/users/${userId}`, data);
     return response.data as UpdateUserResponse;
   } catch (error) {
     throw new Error(handleAxiosError(error, "Failed to update user"));

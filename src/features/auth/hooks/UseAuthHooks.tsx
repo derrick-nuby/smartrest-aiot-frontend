@@ -75,7 +75,9 @@ export function useLogin() {
         router.push("/portal/patient");
       } else if (userRole === "admin") {
         router.push("/portal/admin");
-      } else if (userRole === "doctor") {
+      } else if (userRole === "customer") {
+        router.push("/portal/admin");
+      } else if (userRole === "customer") {
         router.push("/portal/doctor");
       } else {
         // Default redirect if role is not recognized
