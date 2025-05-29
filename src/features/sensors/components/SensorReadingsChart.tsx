@@ -1,52 +1,52 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useHistoricalSensorData } from "../hooks/useSensorHooks"
-import { SensorType } from "../types/SensorTypes"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { DateRangePicker } from "@/components/ui/date-range-picker"
-import { Loader2 } from "lucide-react"
-import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendItem } from "@/components/ui/chart"
-import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
+import { useState } from "react";
+import { useHistoricalSensorData } from "../hooks/useSensorHooks";
+import { SensorType } from "../types/SensorTypes";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { DateRangePicker } from "@/components/ui/date-range-picker";
+import { Loader2 } from "lucide-react";
+import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendItem } from "@/components/ui/chart";
+import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
 interface SensorReadingsChartProps {
-  patientId: string
+  patientId: string;
 }
 
 export const SensorReadingsChart = ({ patientId }: SensorReadingsChartProps) => {
-  const [sensorType, setSensorType] = useState<SensorType>(SensorType.HEART_RATE)
+  const [sensorType, setSensorType] = useState<SensorType>(SensorType.HEART_RATE);
   const [dateRange, setDateRange] = useState({
     from: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // 7 days ago
     to: new Date(),
-  })
+  });
 
   const { data, isLoading, isError } = useHistoricalSensorData({
     patient_id: patientId,
     type: sensorType,
     from: dateRange.from.toISOString().split("T")[0],
     to: dateRange.to.toISOString().split("T")[0],
-  })
+  });
 
   const chartData = data?.readings.map((reading) => ({
     timestamp: new Date(reading.timestamp).toLocaleTimeString(),
     date: new Date(reading.timestamp).toLocaleDateString(),
     value: reading.sensor_value,
     unit: reading.sensor_unit || "",
-  }))
+  }));
 
   const getSensorTypeLabel = (type: SensorType): string => {
     return type
       .split("_")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ")
-  }
+      .join(" ");
+  };
 
   const getYAxisLabel = (): string => {
-    if (!data?.readings.length) return ""
-    return data.readings[0].sensor_unit || ""
-  }
+    if (!data?.readings.length) return "";
+    return data.readings[0].sensor_unit || "";
+  };
 
   return (
     <Card className="w-full">
@@ -125,9 +125,9 @@ export const SensorReadingsChart = ({ patientId }: SensorReadingsChartProps) => 
                                   {getSensorTypeLabel(sensorType)}: {payload[0].value} {payload[0].payload.unit}
                                 </div>
                               </ChartTooltipContent>
-                            )
+                            );
                           }
-                          return null
+                          return null;
                         }}
                       />
                     </LineChart>
@@ -148,5 +148,5 @@ export const SensorReadingsChart = ({ patientId }: SensorReadingsChartProps) => 
         </Tabs>
       </CardContent>
     </Card>
-  )
-}
+  );
+};
