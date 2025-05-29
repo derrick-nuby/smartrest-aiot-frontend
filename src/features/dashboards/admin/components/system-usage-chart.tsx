@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Line, LineChart, XAxis, YAxis, CartesianGrid, Legend } from "recharts"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { generateSystemUsageData } from "../data/mock-data"
-import type { AdminFilterPeriod } from "../types"
+import { useState } from "react";
+import { Line, LineChart, XAxis, YAxis, CartesianGrid, Legend } from "recharts";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { generateSystemUsageData } from "../data/mock-data";
+import type { AdminFilterPeriod } from "../types";
 
 const chartConfig = {
   activeUsers: {
@@ -25,11 +25,11 @@ const chartConfig = {
     label: "Error Rate (%)",
     color: "hsl(var(--chart-4))",
   },
-}
+};
 
 export function SystemUsageChart() {
-  const [period, setPeriod] = useState<AdminFilterPeriod>("24h")
-  const data = generateSystemUsageData(period)
+  const [period, setPeriod] = useState<AdminFilterPeriod>("24h");
+  const data = generateSystemUsageData(period);
 
   return (
     <Card>
@@ -60,10 +60,11 @@ export function SystemUsageChart() {
                 new Date(value).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })
               }
             />
-            <YAxis />
+            <YAxis yAxisId="left" />
+            <YAxis yAxisId="right" orientation="right" />
             <ChartTooltip content={<ChartTooltipContent />} />
             <Legend />
-            <Line type="monotone" dataKey="activeUsers" stroke="var(--color-activeUsers)" strokeWidth={2} dot={false} />
+            <Line type="monotone" dataKey="activeUsers" stroke="var(--color-activeUsers)" strokeWidth={2} dot={false} yAxisId="left" />
             <Line
               type="monotone"
               dataKey="apiCalls"
@@ -80,10 +81,10 @@ export function SystemUsageChart() {
               dot={false}
               yAxisId="right"
             />
-            <Line type="monotone" dataKey="errorRate" stroke="var(--color-errorRate)" strokeWidth={2} dot={false} />
+            <Line type="monotone" dataKey="errorRate" stroke="var(--color-errorRate)" strokeWidth={2} dot={false} yAxisId="left" />
           </LineChart>
         </ChartContainer>
       </CardContent>
     </Card>
-  )
+  );
 }

@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Line, LineChart, XAxis, YAxis, CartesianGrid, Legend } from "recharts"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { generateVitalSignsData } from "../data/mock-data"
-import type { DoctorFilterPeriod } from "../types"
+import { useState } from "react";
+import { Line, LineChart, XAxis, YAxis, CartesianGrid, Legend } from "recharts";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { generateVitalSignsData } from "../data/mock-data";
+import type { DoctorFilterPeriod } from "../types";
 
 const chartConfig = {
   heartRate: {
@@ -21,11 +21,11 @@ const chartConfig = {
     label: "Respiration (BPM)",
     color: "hsl(var(--chart-3))",
   },
-}
+};
 
 export function VitalSignsChart() {
-  const [period, setPeriod] = useState<DoctorFilterPeriod>("24h")
-  const data = generateVitalSignsData(period)
+  const [period, setPeriod] = useState<DoctorFilterPeriod>("24h");
+  const data = generateVitalSignsData(period);
 
   return (
     <Card>
@@ -54,10 +54,11 @@ export function VitalSignsChart() {
               dataKey="timestamp"
               tickFormatter={(value) => new Date(value).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
             />
-            <YAxis />
+            <YAxis yAxisId="main" />
+            <YAxis yAxisId="temp" orientation="right" />
             <ChartTooltip content={<ChartTooltipContent />} />
             <Legend />
-            <Line type="monotone" dataKey="heartRate" stroke="var(--color-heartRate)" strokeWidth={2} dot={false} />
+            <Line type="monotone" dataKey="heartRate" stroke="var(--color-heartRate)" strokeWidth={2} dot={false} yAxisId="main" />
             <Line
               type="monotone"
               dataKey="temperature"
@@ -66,10 +67,10 @@ export function VitalSignsChart() {
               dot={false}
               yAxisId="temp"
             />
-            <Line type="monotone" dataKey="respiration" stroke="var(--color-respiration)" strokeWidth={2} dot={false} />
+            <Line type="monotone" dataKey="respiration" stroke="var(--color-respiration)" strokeWidth={2} dot={false} yAxisId="main" />
           </LineChart>
         </ChartContainer>
       </CardContent>
     </Card>
-  )
+  );
 }
