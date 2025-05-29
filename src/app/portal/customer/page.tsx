@@ -1,10 +1,10 @@
 "use client";
 
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { SleepTrendChart } from "@/features/dashboards/customer/components/sleep-trend-chart";
 import { MattressPerformanceChart } from "@/features/dashboards/customer/components/mattress-performance-chart";
 import { TemperatureControlChart } from "@/features/dashboards/customer/components/temperature-control-chart";
 import { FeatureUsageChart } from "@/features/dashboards/customer/components/feature-usage-chart";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   improvementData,
   batteryData,
