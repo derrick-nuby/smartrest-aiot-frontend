@@ -1,10 +1,10 @@
 "use client";
 
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { SystemUsageChart } from "@/features/dashboards/admin/components/system-usage-chart";
 import { ServerPerformanceChart } from "@/features/dashboards/admin/components/server-performance-chart";
 import { DeviceStatusChart } from "@/features/dashboards/admin/components/device-status-chart";
 import { ErrorRateChart } from "@/features/dashboards/admin/components/error-rate-chart";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   userRoleData,
   dataVolumeData,
