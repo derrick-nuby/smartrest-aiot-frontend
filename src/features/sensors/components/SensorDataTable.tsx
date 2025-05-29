@@ -45,15 +45,17 @@ export const SensorDataTable = ({ patientId }: SensorDataTableProps) => {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
   };
+  // Handle paginated API response structure - data is in data.data array
+  const sensorReadings = data?.data || [];
 
   const handleExportCSV = () => {
-    if (!data?.readings.length) return;
+    if (!sensorReadings.length) return;
 
     // Create CSV content
     const headers = ["Reading ID", "Sensor Type", "Value", "Unit", "Timestamp", "Notes"];
     const csvContent = [
       headers.join(","),
-      ...data.readings.map((reading) =>
+      ...sensorReadings.map((reading) =>
         [
           reading.reading_id,
           reading.sensor_type,
@@ -76,9 +78,8 @@ export const SensorDataTable = ({ patientId }: SensorDataTableProps) => {
     link.click();
     document.body.removeChild(link);
   };
-
-  const paginatedData = data?.readings.slice((page - 1) * 10, page * 10);
-  const totalPages = data?.readings ? Math.ceil(data.readings.length / 10) : 0;
+  const paginatedData = sensorReadings.slice((page - 1) * 10, page * 10);
+  const totalPages = sensorReadings.length ? Math.ceil(sensorReadings.length / 10) : 0;
 
   return (
     <Card className="w-full">
@@ -103,7 +104,7 @@ export const SensorDataTable = ({ patientId }: SensorDataTableProps) => {
               </SelectContent>
             </Select>
             <DateRangePicker value={dateRange} onChange={setDateRange} align="end" className="w-full sm:w-auto" />
-            <Button variant="outline" onClick={handleExportCSV} disabled={!data?.readings.length}>
+            <Button variant="outline" onClick={handleExportCSV} disabled={!sensorReadings.length}>
               <Download className="h-4 w-4 mr-2" />
               Export CSV
             </Button>
@@ -119,7 +120,7 @@ export const SensorDataTable = ({ patientId }: SensorDataTableProps) => {
           <div className="text-center p-8">
             <p className="text-destructive">Failed to load sensor data. Please try again later.</p>
           </div>
-        ) : !data?.readings.length ? (
+        ) : !sensorReadings.length ? (
           <div className="text-center p-8">
             <p className="text-muted-foreground">No sensor data available for the selected period.</p>
           </div>

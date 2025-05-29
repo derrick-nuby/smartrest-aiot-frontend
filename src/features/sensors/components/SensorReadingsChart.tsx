@@ -21,7 +21,6 @@ export const SensorReadingsChart = ({ patientId }: SensorReadingsChartProps) => 
     from: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // 7 days ago
     to: new Date(),
   });
-
   const { data, isLoading, isError } = useHistoricalSensorData({
     patient_id: patientId,
     type: sensorType,
@@ -29,12 +28,15 @@ export const SensorReadingsChart = ({ patientId }: SensorReadingsChartProps) => 
     to: dateRange.to.toISOString().split("T")[0],
   });
 
-  const chartData = data?.readings.map((reading) => ({
+  // Handle the paginated API response structure
+  const sensorReadings = data?.data || [];
+
+  const chartData = sensorReadings.length > 0 ? sensorReadings.map((reading) => ({
     timestamp: new Date(reading.timestamp).toLocaleTimeString(),
     date: new Date(reading.timestamp).toLocaleDateString(),
     value: reading.sensor_value,
     unit: reading.sensor_unit || "",
-  }));
+  })) : [];
 
   const getSensorTypeLabel = (type: SensorType): string => {
     return type
@@ -42,10 +44,9 @@ export const SensorReadingsChart = ({ patientId }: SensorReadingsChartProps) => 
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
   };
-
   const getYAxisLabel = (): string => {
-    if (!data?.readings.length) return "";
-    return data.readings[0].sensor_unit || "";
+    if (!sensorReadings.length) return "";
+    return sensorReadings[0].sensor_unit || "";
   };
 
   return (
@@ -83,16 +84,18 @@ export const SensorReadingsChart = ({ patientId }: SensorReadingsChartProps) => 
             {isLoading ? (
               <div className="flex justify-center items-center h-64">
                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
-              </div>
-            ) : isError ? (
-              <div className="text-center p-8">
-                <p className="text-destructive">Failed to load sensor data. Please try again later.</p>
-              </div>
-            ) : !chartData?.length ? (
-              <div className="text-center p-8">
-                <p className="text-muted-foreground">No sensor data available for the selected period.</p>
-              </div>
-            ) : (
+              </div>) : isError ? (
+                <div className="text-center p-8">
+                  <p className="text-destructive">Failed to load sensor data. Please try again later.</p>
+                </div>
+              ) : !sensorReadings.length ? (
+                <div className="text-center p-8">
+                  <p className="text-muted-foreground">No sensor data available for the selected period.</p>
+                  <p className="text-sm text-muted-foreground mt-2">
+                    Try selecting a different date range or sensor type.
+                  </p>
+                </div>
+              ) : (
               <div className="h-[350px] w-full">
                 <ChartContainer config={{
                   sensorData: {

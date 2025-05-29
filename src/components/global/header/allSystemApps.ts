@@ -119,14 +119,29 @@ export const appModules: Apps = {
       displayName: 'Appointments',
       componentIcon: IoCalendarSharp,
       description: 'Schedule and manage doctor appointments'
-    },
-    {
+    }, {
       name: 'products',
       location: '/products',
       access: ['admin', 'customer'],
       displayName: 'Products',
       componentIcon: IoMedkitSharp,
       description: 'Browse and manage smart mattress products'
+    },
+    {
+      name: 'messaging',
+      location: '/messaging',
+      access: ['all', 'patient', 'doctor', 'admin'],
+      displayName: 'Messaging',
+      componentIcon: IoNotificationsSharp,
+      description: 'Internal messaging and communication system'
+    },
+    {
+      name: 'sensors',
+      location: '/sensors',
+      access: ['admin', 'doctor', 'patient'],
+      displayName: 'Sensors',
+      componentIcon: IoHardwareChipSharp,
+      description: 'IoT sensor data monitoring and analytics'
     },
     {
       name: 'users',
